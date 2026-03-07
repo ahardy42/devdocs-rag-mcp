@@ -545,3 +545,20 @@ These are not part of the initial build but are worth keeping in mind architectu
 - [Samsung Smart TV Developer Hub](https://developer.samsung.com/smarttv/develop)
 - [mcp-local-rag (reference implementation)](https://github.com/shinpr/mcp-local-rag)
 - [mcp-rag-server (reference implementation)](https://github.com/kwanLeeFrmVi/mcp-rag-server)
+
+---
+
+## Implementation Checklist
+
+- [x] **Step 1 — Project Scaffolding** — `pyproject.toml`, full directory structure, all stub modules created. `uv sync` succeeds, imports verified.
+- [x] **Step 2 — Configuration and Logging** — `config.py` with env var overrides (`DEVDOCS_` prefix) and `utils/logging.py` (stderr only) implemented and verified.
+- [ ] **Step 3 — Embedding Module** — `EmbeddingModel` class scaffolded; unit tests not yet written or verified against a live model load.
+- [ ] **Step 4 — Vector Store Module** — `DocStore` scaffolded; CRUD unit tests not yet written.
+- [ ] **Step 5 — Document Loaders** — `loaders.py` scaffolded for HTML, Markdown, PDF; unit tests not yet written.
+- [ ] **Step 6 — Chunking** — `chunkers.py` two-pass hybrid strategy scaffolded; chunk size, overlap, and deterministic ID tests not yet written.
+- [ ] **Step 7 — Ingestion Pipeline** — `pipeline.py` and `scripts/ingest.py` scaffolded; end-to-end test against real files not yet run.
+- [ ] **Step 8 — MCP Server (Core Tools)** — `search_docs`, `list_collections`, `collection_stats` implemented in `server.py`; not yet validated in MCP Inspector.
+- [ ] **Step 9 — MCP Server (Extended Tools)** — `get_doc_context` and `ingest_docs` implemented in `server.py`; not yet validated in MCP Inspector.
+- [ ] **Step 10 — Claude Code Integration** — `.mcp.json` created; not yet tested in a live Claude Code session.
+- [ ] **Step 11 — Samsung TV Documentation Crawl** — `scripts/crawl_samsung_docs.py` is a placeholder; crawler not implemented.
+- [ ] **Step 12 — Evaluation** — `evals/` directory not yet created; evaluation questions not written.

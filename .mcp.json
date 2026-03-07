@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "devdocs-rag": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "/Users/ultimatequestioncoding/Documents/github/projects/devdocs-rag-mcp",
+        "devdocs-rag-server"
+      ],
+      "env": {
+        "DEVDOCS_CHROMA_DB_PATH": "/Users/ultimatequestioncoding/Documents/github/projects/devdocs-rag-mcp/data/chroma",
+        "DEVDOCS_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
