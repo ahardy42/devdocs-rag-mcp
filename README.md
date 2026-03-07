@@ -173,6 +173,91 @@ for r in store.search('samsung_tv', 'remote control key events', n_results=3):
 
 ---
 
+## Adding a new documentation set
+
+Each documentation set is an independent named **collection** in ChromaDB. Collections are isolated — adding React Native docs has no effect on the Samsung TV collection, and Claude can search either or both.
+
+### Step 1 — Get the docs
+
+You need the documentation as local files (HTML, Markdown, or PDF). How you get them depends on the source:
+
+**Option A: Download a static site**
+
+Use `wget` to mirror a documentation site:
+
+```bash
+wget --mirror --convert-links --adjust-extension --no-parent \
+     --directory-prefix=data/raw/react-native \
+     https://reactnative.dev/docs/getting-started
+```
+
+**Option B: Write a crawler**
+
+Use `scripts/crawl_samsung_docs.py` as a template. The key parts to adapt are:
+- `SEED_URLS` — one entry point per major section of the docs
+- `_ALLOWED_PREFIX` — the URL prefix used to stay within the site
+
+**Option C: Clone a docs repo**
+
+Many projects publish their docs as Markdown in a GitHub repo:
+
+```bash
+git clone --depth=1 https://github.com/sveltejs/svelte.dev data/raw/svelte
+```
+
+### Step 2 — Ingest into a named collection
+
+```bash
+# Ingest with per-file doc_type inference (recommended)
+uv run python scripts/ingest.py data/raw/react-native/ \
+    --collection react_native \
+    --infer-doc-type
+
+# Or apply a single doc_type to everything
+uv run python scripts/ingest.py data/raw/svelte/documentation/ \
+    --collection svelte \
+    --doc-type guide
+```
+
+The `--infer-doc-type` flag classifies each file as `api_reference`, `guide`, `spec`, etc. based on its path — useful when the source site uses a standard directory structure. Use `--doc-type` when all files are the same type or the paths aren't structured.
+
+Ingestion is idempotent — re-running updates existing chunks in place.
+
+### Step 3 — Verify the collection
+
+```bash
+# Check what was indexed
+uv run python -c "
+from devdocs_rag.embedding import EmbeddingModel
+from devdocs_rag.store import DocStore
+store = DocStore(embedding_model=EmbeddingModel())
+s = store.collection_stats('react_native')
+print('docs:', s.doc_count, '| types:', s.doc_types)
+" 2>/dev/null
+
+# Test a search
+uv run python -c "
+from devdocs_rag.embedding import EmbeddingModel
+from devdocs_rag.store import DocStore
+store = DocStore(embedding_model=EmbeddingModel())
+for r in store.search('react_native', 'how to use FlatList', n_results=3):
+    print(f'score={r.relevance_score:.3f}', r.content[:200])
+" 2>/dev/null
+```
+
+### Step 4 — Use it in Claude Code
+
+No server restart needed. The new collection is immediately available via the existing MCP tools:
+
+```
+search_docs("how do I handle navigation?", collection="react_native")
+list_collections()   ← confirms the new collection is present
+```
+
+You can search a specific collection with the `collection` argument, or omit it to search across all indexed collections at once.
+
+---
+
 ## Running tests
 
 ```bash
