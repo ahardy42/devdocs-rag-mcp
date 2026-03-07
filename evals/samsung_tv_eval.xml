@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Samsung TV Developer Documentation — RAG Evaluation
-  =====================================================
-  10 questions covering the core Samsung Smart TV development topics.
+  Samsung TV Developer Documentation - RAG Evaluation
+  10 questions covering core Samsung Smart TV development topics.
 
-  Format
-  ------
-  Each <question> has:
-    <prompt>        — the natural-language question posed to Claude
-    <tools>         — MCP tools Claude must call to answer correctly
-    <must_contain>  — key terms / concepts the answer must include
-    <scoring>       — pass criteria (all must_contain items present = pass)
+  Each question element has:
+    prompt        the natural-language question
+    tools         MCP tool and suggested query
+    must_contain  key terms that must appear in a correct answer
+    scoring       grading rule
 
-  Run these manually in a Claude Code session that has the devdocs-rag MCP
-  server connected and the samsung_tv collection indexed.
+  Run via: uv run python evals/run_eval.py
 -->
 <eval name="samsung_tv_docs" collection="samsung_tv" version="1">
 
   <metadata>
     <description>
       Baseline retrieval accuracy evaluation for the Samsung Smart TV
-      documentation RAG system. Tests whether Claude can use search_docs
-      to answer real Samsung TV developer questions correctly.
+      documentation RAG system. Tests whether search_docs returns chunks
+      that contain the terms needed to answer real developer questions.
     </description>
     <created>2026-03-07</created>
   </metadata>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 1. Remote control input                                              -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q1: Remote control input -->
   <question id="1" topic="input">
     <prompt>
       How do I listen for remote control key events in a Samsung Smart TV
@@ -47,9 +41,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 2. config.xml manifest                                               -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q2: config.xml manifest -->
   <question id="2" topic="configuration">
     <prompt>
       What are the required fields in the config.xml file for a Samsung
@@ -68,9 +60,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 3. App lifecycle                                                     -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q3: App lifecycle -->
   <question id="3" topic="lifecycle">
     <prompt>
       How does the Samsung Smart TV application lifecycle work? What events
@@ -89,9 +79,7 @@
     <scoring>pass if at least 2 of 3 must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 4. Focus navigation                                                  -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q4: Focus navigation -->
   <question id="4" topic="input">
     <prompt>
       How should I implement focus management and spatial navigation for
@@ -110,9 +98,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 5. Video playback                                                    -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q5: Video playback -->
   <question id="5" topic="media">
     <prompt>
       How do I play a video in a Samsung Smart TV web app? Which API or
@@ -130,9 +116,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 6. Network / internet connection check                               -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q6: Network connection check -->
   <question id="6" topic="network">
     <prompt>
       How can a Samsung TV web app detect whether the TV has an active
@@ -150,9 +134,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 7. App packaging and submission                                      -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q7: App packaging and submission -->
   <question id="7" topic="deployment">
     <prompt>
       What is the process for packaging a Samsung Smart TV web application
@@ -170,9 +152,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 8. Resolution and display                                            -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q8: Resolution and display -->
   <question id="8" topic="display">
     <prompt>
       What screen resolutions does Samsung Smart TV support for web
@@ -191,9 +171,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 9. Local storage / data persistence                                  -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q9: Local storage -->
   <question id="9" topic="storage">
     <prompt>
       What options does a Samsung Smart TV web app have for storing data
@@ -211,9 +189,7 @@
     <scoring>pass if all must_contain terms appear in the final answer</scoring>
   </question>
 
-  <!-- ------------------------------------------------------------------ -->
-  <!-- 10. Tizen SDK emulator setup                                         -->
-  <!-- ------------------------------------------------------------------ -->
+  <!-- Q10: Tizen SDK emulator setup -->
   <question id="10" topic="tooling">
     <prompt>
       How do I set up the Tizen SDK emulator to test my Samsung Smart TV
