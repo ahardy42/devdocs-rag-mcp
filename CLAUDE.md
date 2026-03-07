@@ -13,7 +13,7 @@ A local MCP server that provides RAG-powered documentation search to Claude Code
 uv sync
 
 # Run the MCP server (interactive inspector for development/testing)
-fastmcp dev src/devdocs_rag/server.py
+fastmcp dev inspector src/devdocs_rag/server.py
 
 # Ingest documentation into a named collection
 python scripts/ingest.py <path-to-docs> --collection <collection-name>

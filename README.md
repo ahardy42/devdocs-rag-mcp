@@ -68,7 +68,7 @@ Ingestion is idempotent — re-running replaces existing chunks for the same fil
 For interactive development and tool testing via the MCP Inspector:
 
 ```bash
-uv run fastmcp dev src/devdocs_rag/server.py
+uv run fastmcp dev inspector src/devdocs_rag/server.py
 ```
 
 ---
