@@ -557,8 +557,8 @@ These are not part of the initial build but are worth keeping in mind architectu
 - [x] **Step 5 — Document Loaders** — `loaders.py` implemented for HTML and Markdown (PDF via unstructured already scaffolded); 15 unit tests passing covering title extraction, content extraction, metadata fields, `.htm` extension, and unsupported format error.
 - [x] **Step 6 — Chunking** — `chunkers.py` two-pass hybrid strategy implemented; 16 unit tests passing covering HTML/Markdown/unknown format chunking, deterministic IDs, second-pass splitting of oversized chunks, and metadata preservation.
 - [x] **Step 7 — Ingestion Pipeline** — `pipeline.py` and `scripts/ingest.py` implemented; 12 unit tests passing covering single-file and directory ingestion, idempotency, extra metadata, error handling, and `IngestResult` fields. Full suite: 64 tests passing.
-- [ ] **Step 8 — MCP Server (Core Tools)** — `search_docs`, `list_collections`, `collection_stats` implemented in `server.py`; not yet validated in MCP Inspector.
-- [ ] **Step 9 — MCP Server (Extended Tools)** — `get_doc_context` and `ingest_docs` implemented in `server.py`; not yet validated in MCP Inspector.
-- [ ] **Step 10 — Claude Code Integration** — `.mcp.json` created; not yet tested in a live Claude Code session.
+- [x] **Step 8 — MCP Server (Core Tools)** — `search_docs`, `list_collections`, `collection_stats` tested; 15 unit tests passing. Server boots and responds to MCP initialize.
+- [x] **Step 9 — MCP Server (Extended Tools)** — `get_doc_context` and `ingest_docs` tested; 7 unit tests passing. Full server test suite: 22 tests.
+- [ ] **Step 10 — Claude Code Integration** — `.mcp.json` exists; pending live Claude Code session test with real indexed data.
 - [ ] **Step 11 — Samsung TV Documentation Crawl** — `scripts/crawl_samsung_docs.py` is a placeholder; crawler not implemented.
 - [ ] **Step 12 — Evaluation** — `evals/` directory not yet created; evaluation questions not written.
