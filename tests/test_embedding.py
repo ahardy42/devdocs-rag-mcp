@@ -3,8 +3,6 @@
 Tests run against sentence-transformers/all-MiniLM-L6-v2, a small public model,
 to verify the embedding infrastructure without requiring HuggingFace auth.
 
-The production default (nomic-ai/nomic-embed-text-v2) is a gated model — to use
-it you must accept its terms at huggingface.co and run `huggingface-cli login`.
 """
 
 import pytest

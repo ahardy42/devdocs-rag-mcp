@@ -98,15 +98,15 @@ Once connected, Claude Code can call `search_docs`, `list_collections`, `collect
 
 All settings are controlled via environment variables prefixed with `DEVDOCS_`. Set them in `.mcp.json` under `env`, or export them before running scripts.
 
-| Variable | Default | Description |
-|---|---|---|
-| `DEVDOCS_CHROMA_DB_PATH` | `./data/chroma` | Where ChromaDB stores its files |
-| `DEVDOCS_EMBEDDING_MODEL` | `nomic-ai/nomic-embed-text-v2` | HuggingFace model ID |
-| `DEVDOCS_EMBEDDING_BACKEND` | `sentence-transformers` | `sentence-transformers` or `ollama` |
-| `DEVDOCS_CHUNK_SIZE` | `800` | Target tokens per chunk |
-| `DEVDOCS_CHUNK_OVERLAP` | `100` | Overlap between consecutive chunks |
-| `DEVDOCS_DEFAULT_N_RESULTS` | `5` | Default number of search results |
-| `DEVDOCS_LOG_LEVEL` | `INFO` | Log level (stderr only) |
+| Variable                    | Default                            | Description                         |
+| --------------------------- | ---------------------------------- | ----------------------------------- |
+| `DEVDOCS_CHROMA_DB_PATH`    | `./data/chroma`                    | Where ChromaDB stores its files     |
+| `DEVDOCS_EMBEDDING_MODEL`   | `nomic-ai/nomic-embed-text-v2-moe` | HuggingFace model ID                |
+| `DEVDOCS_EMBEDDING_BACKEND` | `sentence-transformers`            | `sentence-transformers` or `ollama` |
+| `DEVDOCS_CHUNK_SIZE`        | `800`                              | Target tokens per chunk             |
+| `DEVDOCS_CHUNK_OVERLAP`     | `100`                              | Overlap between consecutive chunks  |
+| `DEVDOCS_DEFAULT_N_RESULTS` | `5`                                | Default number of search results    |
+| `DEVDOCS_LOG_LEVEL`         | `INFO`                             | Log level (stderr only)             |
 
 ---
 
@@ -151,12 +151,12 @@ uv run pytest tests/
 
 ## Stack
 
-| Component | Choice |
-|---|---|
-| MCP framework | FastMCP |
-| Vector store | ChromaDB |
-| Embedding model | Nomic Embed Text V2 (305M params, local) |
-| Embedding runtime | sentence-transformers |
-| Document parsing | unstructured + BeautifulSoup |
-| Chunking | LangChain text splitters |
-| Package manager | uv |
+| Component         | Choice                                   |
+| ----------------- | ---------------------------------------- |
+| MCP framework     | FastMCP                                  |
+| Vector store      | ChromaDB                                 |
+| Embedding model   | Nomic Embed Text V2 (305M params, local) |
+| Embedding runtime | sentence-transformers                    |
+| Document parsing  | unstructured + BeautifulSoup             |
+| Chunking          | LangChain text splitters                 |
+| Package manager   | uv                                       |
