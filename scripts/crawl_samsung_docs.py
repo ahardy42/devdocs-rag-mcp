@@ -26,19 +26,7 @@ from bs4 import BeautifulSoup
 # ---------------------------------------------------------------------------
 SEED_URLS: list[str] = [
     # Getting started
-    "https://developer.samsung.com/smarttv/develop/getting-started/quick-start-guide.html",
-    # Web app guides
-    "https://developer.samsung.com/smarttv/develop/guides.html",
-    # Samsung Product API (TV-specific extensions)
-    "https://developer.samsung.com/smarttv/develop/api-references/samsung-product-api-references.html",
-    # Tizen Web Device APIs
-    "https://developer.samsung.com/smarttv/develop/api-references/tizen-web-device-api-references.html",
-    # config.xml / manifest
-    "https://developer.samsung.com/smarttv/develop/getting-started/creating-your-first-samsung-smart-tv-web-application.html",
-    # Tools & SDK
-    "https://developer.samsung.com/smarttv/develop/tools.html",
-    # User interaction / remote control
-    "https://developer.samsung.com/smarttv/develop/guides/user-interaction.html",
+    "https://developer.samsung.com/smarttv/develop/getting-started/quick-start-guide.html"
 ]
 
 _ALLOWED_PREFIX = "https://developer.samsung.com/smarttv"
