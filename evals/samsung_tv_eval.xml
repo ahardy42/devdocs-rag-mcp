@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Samsung TV Developer Documentation — RAG Evaluation
+  =====================================================
+  10 questions covering the core Samsung Smart TV development topics.
+
+  Format
+  ------
+  Each <question> has:
+    <prompt>        — the natural-language question posed to Claude
+    <tools>         — MCP tools Claude must call to answer correctly
+    <must_contain>  — key terms / concepts the answer must include
+    <scoring>       — pass criteria (all must_contain items present = pass)
+
+  Run these manually in a Claude Code session that has the devdocs-rag MCP
+  server connected and the samsung_tv collection indexed.
+-->
+<eval name="samsung_tv_docs" collection="samsung_tv" version="1">
+
+  <metadata>
+    <description>
+      Baseline retrieval accuracy evaluation for the Samsung Smart TV
+      documentation RAG system. Tests whether Claude can use search_docs
+      to answer real Samsung TV developer questions correctly.
+    </description>
+    <created>2026-03-07</created>
+  </metadata>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 1. Remote control input                                              -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="1" topic="input">
+    <prompt>
+      How do I listen for remote control key events in a Samsung Smart TV
+      web application?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>remote control key events Samsung TV web app</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>keydown</term>
+      <term>addEventListener</term>
+      <term>KeyboardEvent</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 2. config.xml manifest                                               -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="2" topic="configuration">
+    <prompt>
+      What are the required fields in the config.xml file for a Samsung
+      Smart TV web application?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>config.xml required fields Samsung Smart TV</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>config.xml</term>
+      <term>widget</term>
+      <term>name</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 3. App lifecycle                                                     -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="3" topic="lifecycle">
+    <prompt>
+      How does the Samsung Smart TV application lifecycle work? What events
+      fire when the app is hidden or shown?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>Samsung TV web app lifecycle visibility events</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>visibilitychange</term>
+      <term>hidden</term>
+      <term>resume</term>
+    </must_contain>
+    <scoring>pass if at least 2 of 3 must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 4. Focus navigation                                                  -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="4" topic="input">
+    <prompt>
+      How should I implement focus management and spatial navigation for
+      a Samsung TV web app so users can navigate with the remote?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>focus management spatial navigation Samsung TV remote</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>focus</term>
+      <term>spatial</term>
+      <term>navigation</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 5. Video playback                                                    -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="5" topic="media">
+    <prompt>
+      How do I play a video in a Samsung Smart TV web app? Which API or
+      HTML element should I use?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>video playback API Samsung Smart TV web application</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>video</term>
+      <term>AVPlay</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 6. Network / internet connection check                               -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="6" topic="network">
+    <prompt>
+      How can a Samsung TV web app detect whether the TV has an active
+      internet connection?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>network connection check internet Samsung TV Tizen</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>network</term>
+      <term>webapis</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 7. App packaging and submission                                      -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="7" topic="deployment">
+    <prompt>
+      What is the process for packaging a Samsung Smart TV web application
+      for submission to the Samsung Smart Hub store?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>package Samsung Smart TV web app submission store wgt</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>wgt</term>
+      <term>package</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 8. Resolution and display                                            -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="8" topic="display">
+    <prompt>
+      What screen resolutions does Samsung Smart TV support for web
+      applications, and how should I design my UI for different resolutions?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>Samsung TV resolution 1080p 4K UHD web app display</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>1920</term>
+      <term>1080</term>
+      <term>resolution</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 9. Local storage / data persistence                                  -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="9" topic="storage">
+    <prompt>
+      What options does a Samsung Smart TV web app have for storing data
+      locally on the TV?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>local storage data persistence Samsung TV web app</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>localStorage</term>
+      <term>storage</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- 10. Tizen SDK emulator setup                                         -->
+  <!-- ------------------------------------------------------------------ -->
+  <question id="10" topic="tooling">
+    <prompt>
+      How do I set up the Tizen SDK emulator to test my Samsung Smart TV
+      web application without a physical TV?
+    </prompt>
+    <tools>
+      <tool name="search_docs">
+        <suggested_query>Tizen SDK emulator setup Samsung TV development testing</suggested_query>
+      </tool>
+    </tools>
+    <must_contain>
+      <term>emulator</term>
+      <term>Tizen</term>
+      <term>SDK</term>
+    </must_contain>
+    <scoring>pass if all must_contain terms appear in the final answer</scoring>
+  </question>
+
+</eval>

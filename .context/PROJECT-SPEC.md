@@ -560,5 +560,5 @@ These are not part of the initial build but are worth keeping in mind architectu
 - [x] **Step 8 — MCP Server (Core Tools)** — `search_docs`, `list_collections`, `collection_stats` tested; 15 unit tests passing. Server boots and responds to MCP initialize.
 - [x] **Step 9 — MCP Server (Extended Tools)** — `get_doc_context` and `ingest_docs` tested; 7 unit tests passing. Full server test suite: 22 tests.
 - [x] **Step 10 — Claude Code Integration** — `.mcp.json` registered; `claude mcp get devdocs-rag` shows Status: Connected. Server running via stdio subprocess.
-- [ ] **Step 11 — Samsung TV Documentation Crawl** — `scripts/crawl_samsung_docs.py` is a placeholder; crawler not implemented.
-- [ ] **Step 12 — Evaluation** — `evals/` directory not yet created; evaluation questions not written.
+- [x] **Step 11 — Samsung TV Documentation Crawl** — `scripts/crawl_samsung_docs.py` implemented; BFS crawler with 7 seed URLs, configurable depth/limit/delay, saves HTML to `data/raw/samsung-tv/`. Run: `python scripts/crawl_samsung_docs.py`, then `python scripts/ingest.py data/raw/samsung-tv/ --collection samsung_tv`.
+- [x] **Step 12 — Evaluation** — `evals/samsung_tv_eval.xml` created with 10 questions across input, lifecycle, media, network, storage, display, deployment, and tooling topics. Each question specifies the expected `search_docs` query and must_contain terms for grading.
