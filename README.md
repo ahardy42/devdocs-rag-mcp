@@ -141,10 +141,45 @@ devdocs-rag-mcp/
 
 ---
 
+## Inspecting the database
+
+Browse a collection interactively in the terminal (arrow keys to navigate, `s` to search):
+
+```bash
+uv run chroma browse samsung_tv --path data/chroma
+```
+
+Or query directly from Python:
+
+```bash
+# Collection summary
+uv run python -c "
+from devdocs_rag.embedding import EmbeddingModel
+from devdocs_rag.store import DocStore
+store = DocStore(embedding_model=EmbeddingModel())
+s = store.collection_stats('samsung_tv')
+print('docs:', s.doc_count, '| types:', s.doc_types)
+" 2>/dev/null
+
+# Manual search
+uv run python -c "
+from devdocs_rag.embedding import EmbeddingModel
+from devdocs_rag.store import DocStore
+store = DocStore(embedding_model=EmbeddingModel())
+for r in store.search('samsung_tv', 'remote control key events', n_results=3):
+    print(f'score={r.relevance_score:.3f}', r.content[:200])
+" 2>/dev/null
+```
+
+---
+
 ## Running tests
 
 ```bash
 uv run pytest tests/
+
+# RAG accuracy evaluation against the indexed samsung_tv collection
+uv run python evals/run_eval.py
 ```
 
 ---

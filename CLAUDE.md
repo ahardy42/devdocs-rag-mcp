@@ -26,6 +26,12 @@ uv run pytest tests/test_store.py
 
 # Quick embedding model verification (prints the model's output dimension)
 python -c "from devdocs_rag.embedding import EmbeddingModel; m = EmbeddingModel(); print(m.dimension)"
+
+# Browse a ChromaDB collection interactively (terminal UI — arrow keys, s to search)
+uv run chroma browse samsung_tv --path data/chroma
+
+# Run the RAG accuracy evaluation
+uv run python evals/run_eval.py
 ```
 
 ## Architecture
