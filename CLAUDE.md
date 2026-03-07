@@ -24,7 +24,7 @@ uv run pytest tests/
 # Run a single test file
 uv run pytest tests/test_store.py
 
-# Quick embedding model verification (should print 768)
+# Quick embedding model verification (prints the model's output dimension)
 python -c "from devdocs_rag.embedding import EmbeddingModel; m = EmbeddingModel(); print(m.dimension)"
 ```
 
