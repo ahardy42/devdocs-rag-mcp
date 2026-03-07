@@ -554,9 +554,9 @@ These are not part of the initial build but are worth keeping in mind architectu
 - [x] **Step 2 — Configuration and Logging** — `config.py` with env var overrides (`DEVDOCS_` prefix) and `utils/logging.py` (stderr only) implemented and verified.
 - [x] **Step 3 — Embedding Module** — `EmbeddingModel` implemented; 7 unit tests passing. Note: default model (`nomic-embed-text-v2`) is gated on HuggingFace and requires `huggingface-cli login`; tests use `all-MiniLM-L6-v2` to verify infrastructure without auth.
 - [x] **Step 4 — Vector Store Module** — `DocStore` implemented; 13 unit tests passing covering add, upsert idempotency, search, filter, list, stats, and delete. Uses `tmp_path` fixtures, not `data/chroma/`.
-- [ ] **Step 5 — Document Loaders** — `loaders.py` scaffolded for HTML, Markdown, PDF; unit tests not yet written.
-- [ ] **Step 6 — Chunking** — `chunkers.py` two-pass hybrid strategy scaffolded; chunk size, overlap, and deterministic ID tests not yet written.
-- [ ] **Step 7 — Ingestion Pipeline** — `pipeline.py` and `scripts/ingest.py` scaffolded; end-to-end test against real files not yet run.
+- [x] **Step 5 — Document Loaders** — `loaders.py` implemented for HTML and Markdown (PDF via unstructured already scaffolded); 15 unit tests passing covering title extraction, content extraction, metadata fields, `.htm` extension, and unsupported format error.
+- [x] **Step 6 — Chunking** — `chunkers.py` two-pass hybrid strategy implemented; 16 unit tests passing covering HTML/Markdown/unknown format chunking, deterministic IDs, second-pass splitting of oversized chunks, and metadata preservation.
+- [x] **Step 7 — Ingestion Pipeline** — `pipeline.py` and `scripts/ingest.py` implemented; 12 unit tests passing covering single-file and directory ingestion, idempotency, extra metadata, error handling, and `IngestResult` fields. Full suite: 64 tests passing.
 - [ ] **Step 8 — MCP Server (Core Tools)** — `search_docs`, `list_collections`, `collection_stats` implemented in `server.py`; not yet validated in MCP Inspector.
 - [ ] **Step 9 — MCP Server (Extended Tools)** — `get_doc_context` and `ingest_docs` implemented in `server.py`; not yet validated in MCP Inspector.
 - [ ] **Step 10 — Claude Code Integration** — `.mcp.json` created; not yet tested in a live Claude Code session.
