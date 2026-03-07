@@ -552,8 +552,8 @@ These are not part of the initial build but are worth keeping in mind architectu
 
 - [x] **Step 1 — Project Scaffolding** — `pyproject.toml`, full directory structure, all stub modules created. `uv sync` succeeds, imports verified.
 - [x] **Step 2 — Configuration and Logging** — `config.py` with env var overrides (`DEVDOCS_` prefix) and `utils/logging.py` (stderr only) implemented and verified.
-- [ ] **Step 3 — Embedding Module** — `EmbeddingModel` class scaffolded; unit tests not yet written or verified against a live model load.
-- [ ] **Step 4 — Vector Store Module** — `DocStore` scaffolded; CRUD unit tests not yet written.
+- [x] **Step 3 — Embedding Module** — `EmbeddingModel` implemented; 7 unit tests passing. Note: default model (`nomic-embed-text-v2`) is gated on HuggingFace and requires `huggingface-cli login`; tests use `all-MiniLM-L6-v2` to verify infrastructure without auth.
+- [x] **Step 4 — Vector Store Module** — `DocStore` implemented; 13 unit tests passing covering add, upsert idempotency, search, filter, list, stats, and delete. Uses `tmp_path` fixtures, not `data/chroma/`.
 - [ ] **Step 5 — Document Loaders** — `loaders.py` scaffolded for HTML, Markdown, PDF; unit tests not yet written.
 - [ ] **Step 6 — Chunking** — `chunkers.py` two-pass hybrid strategy scaffolded; chunk size, overlap, and deterministic ID tests not yet written.
 - [ ] **Step 7 — Ingestion Pipeline** — `pipeline.py` and `scripts/ingest.py` scaffolded; end-to-end test against real files not yet run.
