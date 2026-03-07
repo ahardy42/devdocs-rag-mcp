@@ -46,6 +46,9 @@ def ingest(
         try:
             doc = load_file(file)
             chunks = chunk_document(doc)
+            if not chunks:
+                logger.debug("Skipping %s — no chunks produced", file.name)
+                continue
             if extra_metadata:
                 enrich(chunks, extra_metadata)
             embeddings = embedding_model.embed([c.content for c in chunks])
