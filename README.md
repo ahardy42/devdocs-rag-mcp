@@ -2,7 +2,7 @@
 
 A local MCP server that provides RAG-powered documentation search to Claude Code. Index any documentation corpus into a local vector database, then search it semantically from within Claude Code sessions — no external APIs, no network exposure.
 
-The first documentation set is Samsung Smart TV developer docs, but the architecture supports any collection.
+Index any documentation corpus — HTML, Markdown, or PDF — into a local vector database and search it semantically from within Claude Code sessions.
 
 ---
 
@@ -49,14 +49,48 @@ uv run python -c "from devdocs_rag.server import mcp; print('OK')"
 
 ---
 
-## Ingesting documentation
+## Commands
+
+Three uv commands are available after `uv sync`:
+
+| Command | Purpose |
+|---|---|
+| `uv run crawl-docs` | Crawl a website and save HTML to `data/raw/<name>/` |
+| `uv run ingest-docs` | Ingest local files into a named ChromaDB collection |
+| `uv run devdocs-rag-server` | Start the MCP server (used by Claude Code) |
+
+### Crawling
+
+```bash
+# Crawl a site — defaults to the seed URL's domain as the allowed prefix
+uv run crawl-docs my-docs https://example.com/docs
+
+# Multiple seed URLs (comma-separated)
+uv run crawl-docs react-docs https://react.dev/learn,https://react.dev/reference
+
+# Restrict crawling to a URL subtree
+uv run crawl-docs react-docs https://react.dev/learn --allowed-prefix https://react.dev/learn
+
+# Tune crawl behaviour
+uv run crawl-docs my-docs https://example.com/docs --limit 200 --depth 3 --delay 1.0
+```
+
+Files are saved to `data/raw/<name>/` as flat HTML files. The collection name passed as the first argument becomes the directory name and is used as the suggested `--collection` value in the next step.
+
+### Ingesting
 
 ```bash
 # Ingest a directory of HTML/Markdown/PDF files into a named collection
-uv run python scripts/ingest.py ./data/raw/samsung-tv/ --collection samsung_tv
+uv run ingest-docs data/raw/my-docs/ --collection my_docs
 
-# Optionally tag documents with a type
-uv run python scripts/ingest.py ./data/raw/samsung-tv/api/ --collection samsung_tv --doc-type api_reference
+# Let the pipeline infer doc_type from path segments (api_reference, guide, etc.)
+uv run ingest-docs data/raw/my-docs/ --collection my_docs --infer-doc-type
+
+# Tag every file with a single doc type
+uv run ingest-docs data/raw/my-docs/api/ --collection my_docs --doc-type api_reference
+
+# Drop and re-ingest from scratch
+uv run ingest-docs data/raw/my-docs/ --collection my_docs --drop
 ```
 
 Ingestion is idempotent — re-running replaces existing chunks for the same files.
@@ -131,8 +165,8 @@ devdocs-rag-mcp/
 │       └── logging.py              # Stderr-only logging setup
 │
 ├── scripts/
-│   ├── ingest.py                   # CLI for ingestion
-│   └── crawl_samsung_docs.py       # Crawler for Samsung developer portal
+│   ├── ingest.py                   # CLI for ingestion (uv run ingest-docs)
+│   └── crawl_docs.py               # General-purpose website crawler (uv run crawl-docs)
 │
 ├── tests/                          # pytest test suite
 ├── data/chroma/                    # ChromaDB persistent storage (gitignored)
@@ -181,23 +215,15 @@ Each documentation set is an independent named **collection** in ChromaDB. Colle
 
 You need the documentation as local files (HTML, Markdown, or PDF). How you get them depends on the source:
 
-**Option A: Download a static site**
-
-Use `wget` to mirror a documentation site:
+**Option A: Use the built-in crawler**
 
 ```bash
-wget --mirror --convert-links --adjust-extension --no-parent \
-     --directory-prefix=data/raw/react-native \
-     https://reactnative.dev/docs/getting-started
+uv run crawl-docs react-native https://reactnative.dev/docs/getting-started
 ```
 
-**Option B: Write a crawler**
+Saves to `data/raw/react-native/`. Use `--allowed-prefix` to restrict crawling to a subtree, `--limit` to cap the page count, and `--depth` to control recursion depth.
 
-Use `scripts/crawl_samsung_docs.py` as a template. The key parts to adapt are:
-- `SEED_URLS` — one entry point per major section of the docs
-- `_ALLOWED_PREFIX` — the URL prefix used to stay within the site
-
-**Option C: Clone a docs repo**
+**Option B: Clone a docs repo**
 
 Many projects publish their docs as Markdown in a GitHub repo:
 
@@ -209,14 +235,10 @@ git clone --depth=1 https://github.com/sveltejs/svelte.dev data/raw/svelte
 
 ```bash
 # Ingest with per-file doc_type inference (recommended)
-uv run python scripts/ingest.py data/raw/react-native/ \
-    --collection react_native \
-    --infer-doc-type
+uv run ingest-docs data/raw/react-native/ --collection react_native --infer-doc-type
 
 # Or apply a single doc_type to everything
-uv run python scripts/ingest.py data/raw/svelte/documentation/ \
-    --collection svelte \
-    --doc-type guide
+uv run ingest-docs data/raw/svelte/documentation/ --collection svelte --doc-type guide
 ```
 
 The `--infer-doc-type` flag classifies each file as `api_reference`, `guide`, `spec`, etc. based on its path — useful when the source site uses a standard directory structure. Use `--doc-type` when all files are the same type or the paths aren't structured.
@@ -263,7 +285,7 @@ You can search a specific collection with the `collection` argument, or omit it 
 ```bash
 uv run pytest tests/
 
-# RAG accuracy evaluation against the indexed samsung_tv collection
+# RAG accuracy evaluation
 uv run python evals/run_eval.py
 ```
 
